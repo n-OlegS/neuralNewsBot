@@ -1,13 +1,18 @@
-from test import d
-import random
-
+import random, json
 global final
-final = ''
-words = {}
 
+with open('/Users/oleg/PycharmProjects/neuralNews/d.json') as file:
+    d = json.load(file)
+    file.close()
+
+orig = input()
+final = orig
 
 def gen_word(word):
+    global final
+
     new_word = random.choice(d[word])
+
     if new_word == '.':
         final += '.'
         return
@@ -15,6 +20,10 @@ def gen_word(word):
         final += ' ' + new_word
         gen_word(new_word)
 
+gen_word(final)
 
-gen_word(input())
-print(final)
+while not 3 < len(final.split()) < 12:
+    final = orig
+    gen_word(final)
+
+print(final.capitalize())
